@@ -6,7 +6,7 @@ reference to them.
 ## Examples
 
 Printing the values of all field whose name starts with "a" and are strings:
-```
+```rust
 use fields_iter::{FieldsInspect, FieldsIter};
 fn print_starts_with_a(v: &dyn FieldsInspect) {
     for (name, value) in FieldsIter::new(v) {
@@ -18,7 +18,7 @@ fn print_starts_with_a(v: &dyn FieldsInspect) {
 ```
 
 Adding one to the field `add_here`:
-```
+```rust
 use fields_iter::{FieldsInspect, FieldsIterMut};
 # #[derive(FieldsInspect)]
 # struct Type { add_here: i32 }
