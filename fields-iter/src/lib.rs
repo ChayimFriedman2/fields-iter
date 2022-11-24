@@ -14,6 +14,7 @@
 use core::any::Any;
 use core::iter::FusedIterator;
 use core::marker::PhantomData;
+use core::panic::UnwindSafe;
 
 pub use fields_iter_macros::FieldsInspect;
 
@@ -387,6 +388,11 @@ impl<'a, T: ?Sized + FieldsInspect> DoubleEndedIterator for FieldsIterMut<'a, T>
         Some((name, value))
     }
 }
+
+// SAFETY: We use the pointer, our only non-`Send`/`Sync` data, in a uniquely owned manner.
+unsafe impl<'a, T: ?Sized + FieldsInspect + Send> Send for FieldsIterMut<'a, T> {}
+unsafe impl<'a, T: ?Sized + FieldsInspect + Sync> Sync for FieldsIterMut<'a, T> {}
+impl<'a, T: ?Sized + FieldsInspect + UnwindSafe> UnwindSafe for FieldsIterMut<'a, T> {}
 
 #[cold]
 #[doc(hidden)]
