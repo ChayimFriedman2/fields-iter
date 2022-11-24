@@ -8,6 +8,7 @@ reference to them.
 Printing the values of all field whose name starts with "a" and are strings:
 ```rust
 use fields_iter::{FieldsInspect, FieldsIter};
+
 fn print_starts_with_a(v: &dyn FieldsInspect) {
     for (name, value) in FieldsIter::new(v) {
         if !name.starts_with('a') { continue };
@@ -20,11 +21,8 @@ fn print_starts_with_a(v: &dyn FieldsInspect) {
 Adding one to the field `add_here`:
 ```rust
 use fields_iter::{FieldsInspect, FieldsIterMut};
-# #[derive(FieldsInspect)]
-# struct Type { add_here: i32 }
-# let mut original = Type { add_here: 0 };
+
 let v: &mut dyn FieldsInspect;
-# let v: &mut dyn FieldsInspect = &mut original;
 let field = FieldsIterMut::new(v)
     .find(|&(name, _)| name == "add_here")
     .expect("no `add_here` field")
