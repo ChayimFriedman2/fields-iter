@@ -1,6 +1,6 @@
 [package]
 name = "fields-iter"
-version = "0.0.2"
+version = "0.0.3"
 edition = "2021"
 authors = ["Chayim Refael Friedman"]
 description = "A crate that allows you inspecting the fields of structs."
