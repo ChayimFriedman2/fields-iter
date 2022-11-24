@@ -1,0 +1,2 @@
+[workspace]
+members = ["fields-iter", "fields-iter-macros"]

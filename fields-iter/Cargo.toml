@@ -1,0 +1,21 @@
+[package]
+name = "fields-iter"
+version = "0.0.1"
+edition = "2021"
+authors = ["Chayim Refael Friedman"]
+description = "A crate that allows you inspecting the fields of structs."
+license = "MIT"
+homepage = "https://github.com/ChayimFriedman2/fields-iter"
+repository = "https://github.com/ChayimFriedman2/fields-iter"
+readme = "../README.md"
+categories = ["no-std"]
+keywords = ["fields", "iterator"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+fields-iter-macros = "0.0.1"
+
+[dev-dependencies]
+rustversion = "1.0.7"
+trybuild = "1.0.63"

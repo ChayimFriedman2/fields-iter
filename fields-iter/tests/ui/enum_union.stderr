@@ -1,0 +1,13 @@
+error: only structs are supported for `#[derive(FieldsInspect)]`
+ --> tests/ui/enum_union.rs:4:1
+  |
+4 | enum Foo {}
+  | ^^^^^^^^^^^
+
+error: only structs are supported for `#[derive(FieldsInspect)]`
+ --> tests/ui/enum_union.rs:7:1
+  |
+7 | / union Bar {
+8 | |     _foo: (),
+9 | | }
+  | |_^

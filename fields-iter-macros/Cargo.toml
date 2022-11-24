@@ -1,0 +1,19 @@
+[package]
+name = "fields-iter-macros"
+version = "0.0.1"
+edition = "2021"
+authors = ["Chayim Refael Friedman"]
+description = "A helper crate to the `fields-iter` crate."
+license = "MIT"
+homepage = "https://github.com/ChayimFriedman2/fields-iter"
+repository = "https://github.com/ChayimFriedman2/fields-iter"
+readme = "../README.md"
+
+[lib]
+proc-macro = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+quote = "1.0.20"
+syn = "1.0.98"
