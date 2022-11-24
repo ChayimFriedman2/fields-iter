@@ -1,5 +1,7 @@
 //! A crate macro that allows you inspecting the fields of structs.
 //!
+//! See the docs on [`FieldsInspect`] for more.
+//!
 //! # no-std support
 //!
 //! This crate is no-std compatible.

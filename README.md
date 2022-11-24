@@ -1,41 +1,36 @@
-# Superbitty
+# fields-iter
 
-A bitfields crate.
+A crate that allows iterating over over struct's fields, getting their name and a mutable/shared
+reference to them.
 
-```rust
-use superbitty::{bitfields, BitFieldCompatible};
+## Examples
 
-#[derive(BitFieldCompatible, Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Enum {
-    A,
-    B,
-    C,
-    D,
-}
-
-#[derive(Clone, Copy)]
-pub struct Rest(pub u8);
-
-// SAFETY: We only set this via `Bitfields`, and thus the values are guaranteed
-// to stay in range.
-unsafe impl BitFieldCompatible for Rest {
-    const SHIFT: u32 = 0;
-    const BITS_LEN: u32 = 6;
-    fn into_raw(self) -> u128 { self.0 as u128 }
-    unsafe fn from_raw(v: u128) -> Self { Self(v as u8) }
-}
-
-bitfields! {
-    pub struct Bitfields : u8 {
-        pub e: Enum,
-        pub r: Rest,
+Printing the values of all field whose name starts with "a" and are strings:
+```
+use fields_iter::{FieldsInspect, FieldsIter};
+fn print_starts_with_a(v: &dyn FieldsInspect) {
+    for (name, value) in FieldsIter::new(v) {
+        if !name.starts_with('a') { continue };
+        let Some(value) = value.downcast_ref::<String>() else { continue };
+        println!("{name}={value}");
     }
 }
+```
 
-fn main() {
-    let mut instance = Bitfields::new(Enum::B, Rest(0b010));
-    assert_eq!(instance.e(), Enum::B);
-    instance.set_r(Rest(0b101));
-    assert_eq!(instance.r().0, 0b101);
-}
+Adding one to the field `add_here`:
+```
+use fields_iter::{FieldsInspect, FieldsIterMut};
+# #[derive(FieldsInspect)]
+# struct Type { add_here: i32 }
+# let mut original = Type { add_here: 0 };
+let v: &mut dyn FieldsInspect;
+# let v: &mut dyn FieldsInspect = &mut original;
+let field = FieldsIterMut::new(v)
+    .find(|&(name, _)| name == "add_here")
+    .expect("no `add_here` field")
+    .1
+    .downcast_mut::<i32>()
+    .expect("field `add_here` is not of type `i32`");
+*field += 1;
+# assert_eq!(original.add_here, 1);
 ```
